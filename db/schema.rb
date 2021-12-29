@@ -10,7 +10,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_29_072710) do
+ActiveRecord::Schema.define(version: 2021_12_29_080447) do
+
+  create_table "account_histories", force: :cascade do |t|
+    t.text "name"
+    t.integer "account_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["account_id"], name: "index_account_histories_on_account_id"
+  end
+
+  create_table "accounts", force: :cascade do |t|
+    t.text "name"
+    t.integer "supplier_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["supplier_id"], name: "index_accounts_on_supplier_id"
+  end
 
   create_table "appointments", force: :cascade do |t|
     t.integer "physician_id", null: false
@@ -48,6 +64,14 @@ ActiveRecord::Schema.define(version: 2021_12_29_072710) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "suppliers", force: :cascade do |t|
+    t.text "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  add_foreign_key "account_histories", "accounts"
+  add_foreign_key "accounts", "suppliers"
   add_foreign_key "appointments", "patients"
   add_foreign_key "appointments", "physicians"
   add_foreign_key "books", "authors"
